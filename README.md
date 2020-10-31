@@ -11,6 +11,11 @@
 
 ## Screenshot(s)
 
+## Stacks
+* Back-End: Python
+    * Libraries:
+* Front-End: TBD
+
 ## Setup
 
 ## Sources
