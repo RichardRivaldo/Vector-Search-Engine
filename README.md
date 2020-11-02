@@ -13,10 +13,13 @@
 
 ## Stacks
 * Back-End: Python
-    * Libraries:
+    * Libraries: 
+        * math dan string (Python)
+        * NLTK (termasuk corpus dan wordnet)
 * Front-End: TBD
 
 ## Setup
+* Pastikan telah memiliki *library* dan *packages* yang digunakan. Jika belum, bisa dimasukkan kode `nltk.download('nama_package')` untuk mengunduhnya (lebih disarankan untuk menginstall NLTK sepenuhnya).
 
 ## Sources
 
