@@ -21,15 +21,14 @@ def readfile(namafile):
 def cleaning(strings):
     # Cleaning special characters (#, *, @, etc) and digits
     # Can be used to remove HTML Tags for Web Scraping
-    table = str.maketrans('', '', string.punctuation)
-    return (strings.translate(table))
+    punc = str.maketrans('', '', string.punctuation)
+    return (strings.translate(punc))
 
 # Tokenization
 
 def token(strings):
     # Tokenize the strings into a list containing words
     return (nltk.word_tokenize(strings))
-
 
 """
 s = cleaning("Can-t")
@@ -39,11 +38,10 @@ print(token(s))
 print(cleaning("<@blue*band$$$>"))
 
 
-namafile = "Shakespeare3.txt"
+namafile = "Romeo1.txt"
 strings = readfile(namafile)
 print(strings)
 clean = cleaning(strings)
 print(clean)
 print(token(clean))
-
 """
