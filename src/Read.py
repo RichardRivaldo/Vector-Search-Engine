@@ -21,7 +21,8 @@ def readfile(namafile):
 def cleaning(strings):
     # Cleaning special characters (#, *, @, etc) and digits
     # Can be used to remove HTML Tags for Web Scraping
-    punc = str.maketrans('', '', string.punctuation)
+    # Replace with Whitespace, same length with the punctuation
+    punc = str.maketrans(string.punctuation, ' '*len(string.punctuation))
     return (strings.translate(punc))
 
 # Tokenization
