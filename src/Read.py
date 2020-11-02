@@ -30,18 +30,21 @@ def token(strings):
     # Tokenize the strings into a list containing words
     return (nltk.word_tokenize(strings))
 
-"""
+def stopwd(strings):
+    # Remove stopwords
+    stopwords = set(nltk.stopwords.words('english'))
+
+    return (nltk.)
+
 s = cleaning("Can-t")
 print(cleaning("Can-t"))
 print(token(s))
 
 print(cleaning("<@blue*band$$$>"))
 
-
-namafile = "Romeo1.txt"
+namafile = "../test/Romeo1.txt"
 strings = readfile(namafile)
 print(strings)
 clean = cleaning(strings)
 print(clean)
 print(token(clean))
-"""
