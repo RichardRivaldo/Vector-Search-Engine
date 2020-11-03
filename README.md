@@ -14,8 +14,11 @@
 ## Stacks
 * Back-End: Python
     * Libraries: 
-        * math dan string (Python)
+        * math, string, os, requests (Python)
         * NLTK (termasuk corpus dan wordnet)
+        * Beautiful Soup
+        * Scikit-Learn
+        * Pandas
 * Front-End: TBD
 
 ## Setup

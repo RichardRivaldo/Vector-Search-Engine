@@ -33,25 +33,3 @@ def lemmatize(Tokens):
     for words in Tokens:
         Lemmatized.append(WordNetLemmatizer.lemmatize(words))
     return(Lemmatized)
-
-
-
-# print(nltk.corpus.stopwords.words("english"))
-#
-# import Read
-#
-# namafile = "../test/Clashes erupt in protests against new Indonesian jobs law.txt"
-# strings = Read.readfile(namafile)
-# print(strings)
-# clean = Read.cleaning(strings)
-# print(clean)
-# t = Read.token(clean)
-# print(t)
-# stop1 = stopwords(t)
-# print()
-# print(stop1)
-# print()
-# print(stemming(stop1))
-# print()
-# print(lemmatize(stop1))
-
