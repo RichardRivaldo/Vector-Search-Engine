@@ -1,0 +1,57 @@
+import Read
+import Preprocessing
+import os
+# from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Ubah query menjadi list untuk divektorisasi
+# query = input()
+# query = Read.cleaning(query)
+# query = Read.token(query)
+# query = Preprocessing.stopwords(query)
+# query = Preprocessing.lemmatize(query)
+#
+# q = [q]
+# qVec = vectorizer.transform(q).toarray().reshape(df.shape[0])
+
+# Menampung semua nama file ke dalam suatu variabel list fileList
+fileList = []
+for root, dirs, files in os.walk('../test', topdown=False):
+    for name in files :
+        dir = os.path.join(root,name).split('\\')  # Mengambil hanya nama filenya, tidak bersama direktori yang displit oleh \
+        fileList.append(dir[1])
+
+contentList = []
+for name in fileList :
+<<<<<<< HEAD
+    # Menampung tiap konten dalam tiap file, melakukan cleaning, konversi ke token, menghapus stopword, dan lemmatize
+=======
+    # menyimpan konten tiap teks dan melakukan proses cleaning, konversi ke token, penghapusan stopwords, dan lemmatize
+>>>>>>> master
+    content = Read.readfile('../test/'+name)
+    content = Read.cleaning(content)
+    content = Read.token(content)
+    content = Preprocessing.stopwords(content)
+    content = Preprocessing.lemmatize(content)
+
+<<<<<<< HEAD
+    # Menggabungkan semua konten menjadi satu list
+    contentList.append(content)
+
+for content in contentList :
+    for words in content :
+        # do stuff for each word
+=======
+    contentList.append(content)
+
+for content in contentList :
+    for word in content :
+        print(word) #do stuff for each word
+
+>>>>>>> master
+
+# vectorizer = TfidfVectorizer()
+# X = vectorizer.fit_transform(contentList)
+# df = pd.DataFrame(X.T.toarray(), index=vectorizer.get_feature_names())
+#
+# print(df.head())
+# print(df.shape)

@@ -9,7 +9,7 @@ import nltk
 
 def readfile(namafile):
     # Open File
-    with open(namafile, 'r') as File:
+    with open(namafile, 'r', encoding='utf-8') as File:
         # Replace newlines with space
         contents = File.read().replace("\n", " ")
         
