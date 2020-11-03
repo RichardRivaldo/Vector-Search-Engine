@@ -23,7 +23,7 @@ def cosine_similarity(v, w):
     normw = magnitude(w)
     return (vdotw / (normv * normw))
 
-# Other Vector Operations
+# Other Vector Operations (if needed)
 
 # Vector Addition
 def add(v,w):
@@ -40,12 +40,3 @@ def scalar(c,v):
 # Vector Distance
 def distance(v,w):
     return magnitude(substract(v,w))
-
-
-"""
-import numpy as np
-
-A = np.array([1, 2, 3])
-B = np.array([3, 2, 5])
-print(cosine_similarity(A, B))
-"""

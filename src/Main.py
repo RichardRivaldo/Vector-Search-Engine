@@ -22,19 +22,32 @@ for root, dirs, files in os.walk('../test', topdown=False):
 
 contentList = []
 for name in fileList :
+<<<<<<< HEAD
     # Menampung tiap konten dalam tiap file, melakukan cleaning, konversi ke token, menghapus stopword, dan lemmatize
+=======
+    # menyimpan konten tiap teks dan melakukan proses cleaning, konversi ke token, penghapusan stopwords, dan lemmatize
+>>>>>>> master
     content = Read.readfile('../test/'+name)
     content = Read.cleaning(content)
     content = Read.token(content)
     content = Preprocessing.stopwords(content)
     content = Preprocessing.lemmatize(content)
 
+<<<<<<< HEAD
     # Menggabungkan semua konten menjadi satu list
     contentList.append(content)
 
 for content in contentList :
     for words in content :
         # do stuff for each word
+=======
+    contentList.append(content)
+
+for content in contentList :
+    for word in content :
+        print(word) #do stuff for each word
+
+>>>>>>> master
 
 # vectorizer = TfidfVectorizer()
 # X = vectorizer.fit_transform(contentList)

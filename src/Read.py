@@ -1,13 +1,15 @@
+# Read the file and tokenize the texts
+
 # Libraries
 
 import string
 import nltk
 
-# Read a file
+# Read a file and change it to lowercase
 
 def readfile(namafile):
     # Open File
-    with open(namafile, 'r') as File:
+    with open(namafile, 'r', encoding='utf-8') as File:
         # Replace newlines with space
         contents = File.read().replace("\n", " ")
         
@@ -16,35 +18,16 @@ def readfile(namafile):
         
     return contents
 
-# Text Cleaning
+# Cleaning special characters (punctuarions)
 
 def cleaning(strings):
-    # Cleaning special characters (#, *, @, etc) and digits
     # Can be used to remove HTML Tags for Web Scraping
-    punc = str.maketrans('', '', string.punctuation)
+    # Replace with Whitespace, same length with the punctuation
+    punc = str.maketrans(string.punctuation, ' '*len(string.punctuation))
     return (strings.translate(punc))
 
-# Tokenization
+# Tokenization process
 
 def token(strings):
     # Tokenize the strings into a list containing words
     return (nltk.word_tokenize(strings))
-
-def stopwd(strings):
-    # Remove stopwords
-    stopwords = set(nltk.stopwords.words('english'))
-
-    return (nltk.)
-
-s = cleaning("Can-t")
-print(cleaning("Can-t"))
-print(token(s))
-
-print(cleaning("<@blue*band$$$>"))
-
-namafile = "../test/Romeo1.txt"
-strings = readfile(namafile)
-print(strings)
-clean = cleaning(strings)
-print(clean)
-print(token(clean))

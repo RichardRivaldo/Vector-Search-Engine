@@ -1,6 +1,5 @@
 import requests
 import csv
-import re
 from bs4 import BeautifulSoup
 
 # fungsi konversi string menjadi list of char
@@ -21,6 +20,7 @@ def webScrap() :
     # untuk tiap class 'story', diambil link a href pertama yang ditemukan, kemudian diappend ke variabel TLink
     for list in soup.find_all('article', class_='story') :
         link = list.find('a')
+<<<<<<< HEAD
         if (link != -1) :
             linkh = link['href']
             TLink.append('https://www.reuters.com'+linkh)
@@ -43,6 +43,28 @@ def webScrap() :
             headline = h1.text
         # mecari paragraf yang ditandaka class 'Paragraph-paragraph-2Bgue ArticleBody-para-TD_9x' sebagai konten
         for p in soupi.find('div', class_='ArticleBodyWrapper').find_all('p') :
+=======
+        linkh = link['href']
+        TLink.append('https://www.reuters.com'+linkh)
+    # ulangi untuk halaman kedua
+    for list in soup2.find_all('article', class_='story') :
+        link = list.find('a')
+        linkh = link['href']
+        TLink.append('https://www.reuters.com'+linkh)
+
+    # tinjau satu-satu link yang ada
+    for linki in TLink :
+        # buat web req dan definisika BeautifulSoup untuk masing-masing link
+        pagei = requests.get(linki).text
+        soupi = BeautifulSoup(pagei, 'lxml')
+
+        content = []  # variabel penampung konten paragraf
+        # mencari headline
+        for h1  in soupi.find_all('h1') :
+            headline = h1.text
+        # mecari paragraf yang ditandakan class 'Paragraph-paragraph-2Bgue ArticleBody-para-TD_9x' sebagai konten
+        for p in soupi.find_all('p', class_='Paragraph-paragraph-2Bgue ArticleBody-para-TD_9x'):
+>>>>>>> master
             paragraph = p.text
             content.append(paragraph)
 
@@ -53,7 +75,6 @@ def webScrap() :
                 headlist[i] = ''
             if headlist[i] == '?' :
                 headlist[i] = ''
-
         headline = ''.join(headlist)
 
         # export file dengan nama headline dan konten content
