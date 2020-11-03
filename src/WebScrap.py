@@ -9,14 +9,12 @@ def Convert(string):
     return list1
 
 def webScrap() :
-    # membuat web request untuk 3 halaman pertama dari website reuters
+    # membuat web request untuk 2 halaman pertama dari website reuters
     page = requests.get('https://www.reuters.com/news/archive/indonesia').text
     page2 = requests.get('https://www.reuters.com/news/archive/indonesia?view=page&page=2&pageSize=10').text
-    page3 = requests.get('https://www.reuters.com/news/archive/indonesia?view=page&page=3&pageSize=10').text
     # mendefinisikan BeautifulSoup untuk masing-masing halaman
     soup = BeautifulSoup(page, 'lxml')
     soup2 = BeautifulSoup(page2, 'lxml')
-    soup3 = BeautifulSoup(page3, 'lxml')
 
     TLink = [] # variabel penampung semua link
     # untuk tiap class 'story', diambil link a href pertama yang ditemukan, kemudian diappend ke variabel TLink
@@ -24,13 +22,8 @@ def webScrap() :
         link = list.find('a')
         linkh = link['href']
         TLink.append('https://www.reuters.com'+linkh)
-    # ulangi untuk halaman kedua dan ketiga
+    # ulangi untuk halaman kedua
     for list in soup2.find_all('article', class_='story') :
-        link = list.find('a')
-        linkh = link['href']
-        TLink.append('https://www.reuters.com'+linkh)
-
-    for list in soup3.find_all('article', class_='story') :
         link = list.find('a')
         linkh = link['href']
         TLink.append('https://www.reuters.com'+linkh)
@@ -45,7 +38,7 @@ def webScrap() :
         # mencari headline
         for h1  in soupi.find_all('h1') :
             headline = h1.text
-        # mecari paragraf yang ditandaka class 'Paragraph-paragraph-2Bgue ArticleBody-para-TD_9x' sebagai konten
+        # mecari paragraf yang ditandakan class 'Paragraph-paragraph-2Bgue ArticleBody-para-TD_9x' sebagai konten
         for p in soupi.find_all('p', class_='Paragraph-paragraph-2Bgue ArticleBody-para-TD_9x'):
             paragraph = p.text
             content.append(paragraph)
@@ -60,7 +53,7 @@ def webScrap() :
         headline = ''.join(headlist)
 
         # export file dengan nama headline dan konten content
-        exportFile = open(headline+'.txt',"w", encoding='utf-8')
+        exportFile = open('../test/'+headline+'.txt',"w", encoding='utf-8')
         exportFile.write(' '.join(content))
         exportFile.close()
 

@@ -35,21 +35,23 @@ def lemmatize(Tokens):
     return(Lemmatized)
 
 
-"""
-print(nltk.corpus.stopwords.words("english"))
 
-import Read
+# print(nltk.corpus.stopwords.words("english"))
+#
+# import Read
+#
+# namafile = "../test/Clashes erupt in protests against new Indonesian jobs law.txt"
+# strings = Read.readfile(namafile)
+# print(strings)
+# clean = Read.cleaning(strings)
+# print(clean)
+# t = Read.token(clean)
+# print(t)
+# stop1 = stopwords(t)
+# print()
+# print(stop1)
+# print()
+# print(stemming(stop1))
+# print()
+# print(lemmatize(stop1))
 
-namafile = "Romeo1.txt"
-strings = Read.readfile(namafile)
-print(strings)
-clean = Read.cleaning(strings)
-print(clean)
-t = Read.token(clean)
-print(t)
-stop1 = stopwords(t)
-print(stop1)
-print(stemming(stop1))
-print(lemmatize(stop1))
-
-"""
