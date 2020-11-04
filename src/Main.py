@@ -36,9 +36,8 @@ for content in contentList :
         if word not in wordList :
             wordList.append(word)
 
+# Membuat variabel penampung jumlah kemunculan tiap kata pada tiap data
 mVec = [[0 for x in range(len(wordList))] for y in range(len(fileList))]
-
-
 j = 0
 for content in contentList :
     for word in content :
@@ -54,7 +53,7 @@ query = Read.token(query)
 query = Preprocessing.stopwords(query)
 query = Preprocessing.stemming(query)
 
-# Proses menghasilkan vektor q yang sudah dihitung kata berulang
+# Proses menghasilkan vektor q yang sudah dihilangkan kata berulang
 q2 = []
 for word in query :
     if word not in q2 :
@@ -65,14 +64,14 @@ for word in query :
         if word == q2[i] :
             num_q[i] += 1
 
-# Tampung setiap kata dari query yang muncul di database, simpan urutan ke berapanya
+# Untuk setiap kata dari query yang muncul di database, simpan urutan ke berapanya
 qWord = []
 for word in query :
     for i in range(len(wordList)) :
         if word == wordList[i] :
             qWord.append(i)
 
-# Query bisa berulang, jadi dicatat juga kemuncula tiap kata di query yang muncul di database
+# Query bisa berulang, jadi dicatat juga kemunculan tiap kata di query yang muncul di database
 num_qWord =[0 for x in range(len(qWord))]
 for word in query :
     for i in range(len(qWord)) :
@@ -89,17 +88,17 @@ for i in range(len(fileList)) :
         dotProd += mVec[i][idx] * num_qWord[k]   # num_qWord adalah jlh kemunculan pada query, mVec adalah jlh kemunculan pada data
         k +=1
 
-    # Menghitun norma dari query
+    # Menghitung norma dari query
     sumQ = 0
     for l in num_q :
         sumQ += pow(l,2)
-    normQ = math.sqrt(sumQ)
+    normQ = float(math.sqrt(sumQ))
 
     # Menghitung norma dari data
     sumD = 0
     for j in range(len(wordList)) :
         sumD += pow(mVec[i][j],2)
-    normD = math.sqrt(sumD)
+    normD = float(math.sqrt(sumD))
 
     # Menghitung similaritas data sekarang dengan query, dan dimasukkan ke list similaritas
     currSim = float(dotProd/(normQ * normD))
