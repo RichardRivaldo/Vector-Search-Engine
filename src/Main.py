@@ -7,7 +7,6 @@ import Read
 import Preprocessing
 import pandas as pd
 import math
-from numpy import *
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
@@ -48,8 +47,6 @@ for content in contentList :
                 mVec[j][i] = mVec[j][i] + 1
     j = j + 1
 
-mVec = reshape(mVec,(len(fileList), len(wordList)))
-
 # Terima query, lakukan pembersihan dll ke query seperti ke database
 query = input()
 query = Read.cleaning(query)
@@ -57,30 +54,27 @@ query = Read.token(query)
 query = Preprocessing.stopwords(query)
 query = Preprocessing.stemming(query)
 
-# Ubah query menjadi suatu list
-q = [query]
-
 # Proses menghasilkan vektor q yang sudah dihitung kata berulang
 q2 = []
-for word in q[0] :
+for word in query :
     if word not in q2 :
         q2.append(word)
 num_q = [0 for x in range(len(q2))]
-for word in q[0] :
+for word in query :
     for i in range(len(q2)) :
         if word == q2[i] :
             num_q[i] += 1
 
 # Tampung setiap kata dari query yang muncul di database, simpan urutan ke berapanya
 qWord = []
-for word in q[0] :
+for word in query :
     for i in range(len(wordList)) :
         if word == wordList[i] :
             qWord.append(i)
 
 # Query bisa berulang, jadi dicatat juga kemuncula tiap kata di query yang muncul di database
 num_qWord =[0 for x in range(len(qWord))]
-for word in q[0] :
+for word in query :
     for i in range(len(qWord)) :
         if word == wordList[qWord[i]]:
             num_qWord[i] += 1
