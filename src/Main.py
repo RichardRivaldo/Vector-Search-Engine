@@ -5,10 +5,7 @@
 import os
 import Read
 import Preprocessing
-import pandas as pd
 import math
-from sklearn.feature_extraction.text import TfidfVectorizer
-
 
 # Menampung semua nama file ke dalam suatu variabel list fileList
 fileList = []
@@ -105,3 +102,34 @@ for i in range(len(fileList)) :
     sim.append(currSim)
 
 print(sim) # buat tes
+
+# Membuat array yang menampung judul dokumen dengan format yang telah dislice
+titleList = [Title[:-4] for Title in fileList]
+
+# Membuat array yang menampung kalimat pertama dari setiap 
+headList = []
+for titles in fileList:
+    with open('../test/'+titles, encoding='utf-8') as f:
+        head = f.read().split('.')
+        headList.append(head[0] + '.')
+
+# Menginisialisasi Array 2D berisi perhitungan similarity, judul dokumen, dan kalimat pertama setiap dokumen
+processedFiles = [[0 for i in range(3)] for j in range(len(fileList))]
+
+# Memasukkan tingkat similarity tiap dokumen
+for i in range(len(sim)):
+    processedFiles[i][0] = sim[i]
+
+# Memasukkan semua judul dokumen
+for i in range(len(fileList)):
+    processedFiles[i][1] = fileList[i]
+
+# Memasukkan kalimat pertama dari setiap dokumen
+for i in range(len(headList)):
+    processedFiles[i][2] = headList[i]
+
+# Mengurutkan array yang telah didapat dengan key berupa kolom pertama, yaitu tingkat similaritas
+# dari yang paling tinggi
+sortedProcessed = sorted(processedFiles, key = lambda keyCol:keyCol[0], reverse=True)
+
+print(sortedProcessed)
