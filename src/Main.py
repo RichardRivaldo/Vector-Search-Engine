@@ -145,7 +145,8 @@ def Search(query) :
         attributeDict = {"Similarity" : sortedProcessed[articles][0],
                         "Title" : sortedProcessed[articles][1],
                         "FirstSentence" : sortedProcessed[articles][2],
-                        "Contents" : contents
+                        "Contents" : contents,
+                        "ID" : "Doc" + str(articles+1)
                         }
         # Memasukkan tiap dictionary yang telah dihasilkan ke dalam list sebelumnya
         processedLD.append(attributeDict)
@@ -179,4 +180,3 @@ def article(id):
 
 if __name__ == '__main__':
     app.run(debug=False)
-

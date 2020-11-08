@@ -18,7 +18,6 @@
         * NLTK (termasuk corpus dan wordnet)
         * Beautiful Soup
         * Lxml
-        * Scikit-Learn
         * Pandas
         
 * Front-End: Flask
