@@ -1,4 +1,5 @@
 import requests
+
 from bs4 import BeautifulSoup
 
 # fungsi konversi string menjadi list of char
@@ -37,9 +38,14 @@ def webScrap() :
         # mencari headline
         for h1  in soupi.find_all('h1') :
             headline = h1.text
+            # Pengubahan untuk keperluan pencarian kalimat pertama yang lancar nantinya
+            headline = headline.replace("U.S." , "US")
         # mecari paragraf yang ditandakan class 'Paragraph-paragraph-2Bgue ArticleBody-para-TD_9x' sebagai konten
         for p in soupi.find_all('p', class_='Paragraph-paragraph-2Bgue ArticleBody-para-TD_9x'):
             paragraph = p.text
+            # Pengubahan untuk keperluan pencarian kalimat pertama yang lancar nantinya
+            paragraph = paragraph.replace("U.S." , "US")
+            paragraph = paragraph.replace("Del." , "Del")
             content.append(paragraph)
 
         # sedikit perbaikan terhadap judul yang tidak bisa dijadikan nama file
