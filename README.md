@@ -27,7 +27,7 @@
 * Pastikan telah memiliki *library* dan *packages* yang digunakan. Jika NLTK tidak datang dengan lengkap, bisa dimasukkan kode `nltk.download('nama_package')` untuk mengunduh setiap package yang ada (lebih disarankan untuk menginstall NLTK sepenuhnya). Adapun untuk mendownload package yang berasal dari pip bisa dimasukkan kode `pip install ('nama_package')`.
 
 ## Run
-* Jalankan terminal, pindah ke direktori src dari git ini, dan ketik `python Main.py`.
+* Jalankan terminal, pindah ke direktori src dari git ini, dan ketik `python Main.py`, jika tidak ada error, berarti semua library terinstall dengan baik, copy link yang muncul, harusnya berupa http://127.0.0.1:5000/ , dan paste ke browser.
 
 ## Sources
 
