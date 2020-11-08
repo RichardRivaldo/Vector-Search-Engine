@@ -19,10 +19,15 @@
         * Beautiful Soup
         * Scikit-Learn
         * Pandas
+        * Flask
+        * Wtforms
 * Front-End: TBD
 
 ## Setup
 * Pastikan telah memiliki *library* dan *packages* yang digunakan. Jika NLTK tidak datang dengan lengkap, bisa dimasukkan kode `nltk.download('nama_package')` untuk mengunduh setiap package yang ada (lebih disarankan untuk menginstall NLTK sepenuhnya). Adapun untuk mendownload package yang berasal dari pip bisa dimasukkan kode `pip install ('nama_package')`.
+
+## Run
+* Jalankan terminal, pindah ke direktori src dari git ini, dan ketik `python Main.py`.
 
 ## Sources
 
