@@ -101,7 +101,7 @@ for i in range(len(fileList)) :
     currSim = float(dotProd/(normQ * normD))
     sim.append(currSim)
 
-print(sim) # buat tes
+#print(sim) # buat tes
 
 # Membuat array yang menampung judul dokumen dengan format yang telah dislice
 titleList = [Title[:-4] for Title in fileList]
@@ -122,7 +122,7 @@ for i in range(len(sim)):
 
 # Memasukkan semua judul dokumen
 for i in range(len(fileList)):
-    processedFiles[i][1] = fileList[i]
+    processedFiles[i][1] = titleList[i]
 
 # Memasukkan kalimat pertama dari setiap dokumen
 for i in range(len(headList)):
@@ -132,4 +132,18 @@ for i in range(len(headList)):
 # dari yang paling tinggi
 sortedProcessed = sorted(processedFiles, key = lambda keyCol:keyCol[0], reverse=True)
 
-print(sortedProcessed)
+#print(sortedProcessed)
+
+# Menginisialisasi list kosong untuk menampung proses selanjutnya
+processedLD = []
+
+# Memasukkan tiap atribut yang ada ke dalam sebuah dictionary dengan key berupa Similarity, Title, dan FirstSentence
+for articles in range(len(sortedProcessed)):
+    attributeDict = {"Similarity" : sortedProcessed[articles][0],
+                     "Title" : sortedProcessed[articles][1],
+                     "FirstSentence" : sortedProcessed[articles][2]
+                     }
+    # Memasukkan tiap dictionary yang telah dihasilkan ke dalam list sebelumnya
+    processedLD.append(attributeDict)
+    
+print(processedLD)
