@@ -17,14 +17,24 @@
         * math, string, os, requests (Python)
         * NLTK (termasuk corpus dan wordnet)
         * Beautiful Soup
+        * Lxml
         * Scikit-Learn
         * Pandas
+        
+* Front-End: Flask
+   * Libraries :
         * Flask
         * Wtforms
-* Front-End: TBD
 
 ## Setup
 * Pastikan telah memiliki *library* dan *packages* yang digunakan. Jika NLTK tidak datang dengan lengkap, bisa dimasukkan kode `nltk.download('nama_package')` untuk mengunduh setiap package yang ada (lebih disarankan untuk menginstall NLTK sepenuhnya). Adapun untuk mendownload package yang berasal dari pip bisa dimasukkan kode `pip install ('nama_package')`.
+* Jalankan kode-kode berikut untuk memastikan semua lib sudah terinstall:
+   - pip install nltk
+   - pip install lxml
+   - pip install beautifulsoup4
+   - pip install bs4
+   - pip install flask
+   - pip install flask-wtf
 
 ## Run
 * Jalankan terminal, pindah ke direktori src dari git ini, dan ketik `python Main.py`, jika tidak ada error, berarti semua library terinstall dengan baik, copy link yang muncul, harusnya berupa http://127.0.0.1:5000/ , dan paste ke browser.
