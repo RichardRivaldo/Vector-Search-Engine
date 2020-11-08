@@ -139,9 +139,12 @@ processedLD = []
 
 # Memasukkan tiap atribut yang ada ke dalam sebuah dictionary dengan key berupa Similarity, Title, dan FirstSentence
 for articles in range(len(sortedProcessed)):
+    with open(('../test/'+sortedProcessed[articles][1]+'.txt'), 'r', encoding='utf-8') as File: 
+        contents = File.read()
     attributeDict = {"Similarity" : sortedProcessed[articles][0],
                      "Title" : sortedProcessed[articles][1],
-                     "FirstSentence" : sortedProcessed[articles][2]
+                     "FirstSentence" : sortedProcessed[articles][2],
+                     "Contents" : contents
                      }
     # Memasukkan tiap dictionary yang telah dihasilkan ke dalam list sebelumnya
     processedLD.append(attributeDict)
