@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    {% for post in posts %}
+        <article class="media content-section">
+            <div class="media-body">
+            <div class="article-metadata">
+                <p class='text-muted'>Similarity : {{ post.Similarity * 100 }} %</p> 
+                <p class='text-muted'>Total Words : {{ post.Words }}</p> 
+            </div>
+            <h2><a class="article-title" href="/article/{{ post.ID }}">{{ post.Title }}</a></h2>
+            <p class="article-content">{{ post.FirstSentence }}</p>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
+
+{% block query %}
+        <div class="content-section">
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Search</legend>
+                    <div class = "form-group">
+                        {{ form.query.label(class="form-control-label")}}
+                        {% if form.query.errors %}
+                            {{ form.query(class="form-control form-control-lg is-invalid")}}
+                            <div class="invalid-feedback">
+                                {% for error in form.query.errors %}
+                                    <span>{{ error }} </span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.query(class="form-control form-control-lg")}}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        </div>
+    
+{% endblock query %}
+
+{% block sideList %}
+<div class="col-md-4">
+    <div class="content-section">
+      <h3>Side List</h3>
+      <p class='text-muted'>Here is a list of documents used
+        <article class="media content-section">
+            <div class="media-body">
+            <div class="article-metadata">
+                Documents used : 
+            </div>
+            {% for post in docs %}
+                <p>{{ post.name }}.txt</p>
+                <br>
+            {% endfor %}
+            </div>
+        </article>
+      </p>
+    </div>
+  </div>
+{% endblock sideList %}
