@@ -2,7 +2,6 @@
 
 # Libraries
 from flask import Flask , render_template, url_for , flash , redirect
-from flask_table import Table, Col
 import os
 import Read
 import Preprocessing
@@ -183,6 +182,7 @@ def Search(query) :
     
     return processedLD , T , THeader
 
+# prosedur membuat dictionary nama-nama file
 def renderDocList() :
     # Menginisialisasi list kosong untuk menampung judul dari tiap dokumen
     docTitle = []
@@ -193,14 +193,8 @@ def renderDocList() :
         docTitle.append(titleDict)
     
     return docTitle
+
     
-
-class ItemTable(Table):
-    name = Col('Name')
-    description = Col('Description')
-
-
-
 # Inisiasi Flask
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'abc123abc123asiwh292rj'
