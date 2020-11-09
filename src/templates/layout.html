@@ -10,6 +10,31 @@
 
         <link rel="stylesheet" type="text/css" href="{{ url_for('static' , filename = 'main.css') }}">
 
+        <style>
+          #term-table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+          }
+
+          #term-table td, #term-table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+          }
+
+          #term-table tr:nth-child(even){background-color: #f2f2f2;}
+
+          #term-table tr:hover {background-color: #ddd;}
+
+          #term-table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #5f788a;
+            color: white;
+          }
+        </style>
+
         {% if title %}
             <title>Search Engine - {{title}}</title>
         {% else %}
@@ -35,23 +60,26 @@
         </header>
 
         <main role="main" class="container">
-            <div class="row">
-              <div class="col-md-8">
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        {% for category,message in messages %}
-                            <div class="alert alert-{{category}}">
-                                {{message}}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-                
-                {% block query %}{% endblock %}
-                {% block content %}{% endblock %}
-              </div>
-              {% block sideList %}{% endblock %}
+          <div class="row">
+            
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                      {% for category,message in messages %}
+                          <div class="alert alert-{{category}}">
+                              {{message}}
+                          </div>
+                      {% endfor %}
+                  {% endif %}
+              {% endwith %}
+              {% block table %}{% endblock %}
+              {% block query %}{% endblock %}
+              {% block content %}{% endblock %}
             </div>
+            {% block sideList %}{% endblock %}
+          </div>
         </main>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

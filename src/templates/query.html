@@ -54,8 +54,7 @@
                 Documents used : 
             </div>
             {% for post in docs %}
-                <p>{{ post.name }}.txt</p>
-                <br>
+                <p>{{ post.Title }}</p>
             {% endfor %}
             </div>
         </article>
@@ -63,3 +62,28 @@
     </div>
   </div>
 {% endblock sideList %}
+
+{% block table %}
+<div class= "content-section">
+    <div style="overflow-x:auto;">
+        <table id="term-table">
+            <thead>
+             {% for column in THeader %}
+                <th>{{ column }}</th>
+             {% endfor %}
+            </thead>
+           
+            <tbody>
+            {% for row in T %}
+               <tr>
+               {% for data in row %}
+                  <td>{{ data }}</td>
+               {% endfor %}
+               </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

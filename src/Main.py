@@ -2,6 +2,7 @@
 
 # Libraries
 from flask import Flask , render_template, url_for , flash , redirect
+from flask_table import Table, Col
 import os
 import Read
 import Preprocessing
@@ -79,6 +80,14 @@ def Search(query) :
 
         # Menghitung similaritas
         sim = []
+
+        # Inisiasi tabel untuk pembuatan tabel term
+        T = [[0 for i in range(len(fileList) + 2)] for j in range(len(q2))]
+        # Dua kolom pertama diisi oleh term dan jumlah kemunculannya pada query
+        for i in range(len(q2)) :
+            T[i][0] = q2[i]
+            T[i][1] = num_q[i]
+        
         for i in range(len(fileList)) :
             # Menghitung Dot Product
             dotProd = 0
@@ -102,7 +111,26 @@ def Search(query) :
             # Menghitung similaritas data sekarang dengan query, dan dimasukkan ke list similaritas
             currSim = float(dotProd/(normQ * normD))
             sim.append(currSim)
+
+            # Menghasilkan list yang menampung jumlah kemunculan tiap query pada database untuk keperluan pembuatan tabel term
+            inc = 0
+            for word in q2 :
+                for inc2 in range(len(wordList)) :
+                    if wordList[inc2] == word :
+                        T[inc][i+2] = mVec[i][inc2]
+                inc += 1
+
+        # List untuk header tiap kolom
+        THeader = [0 for i in range(len(fileList) + 2)]
+        THeader[0] = 'Term'
+        THeader[1] = 'Query'
+
+        for i in range(len(fileList)) :
+            THeader[i+2] = "D"+str(i+1)
+
     else :
+        T = []
+        THeader = []
         sim = [0 for x in range(len(fileList))]
     
 
@@ -135,8 +163,6 @@ def Search(query) :
     # dari yang paling tinggi
     sortedProcessed = sorted(processedFiles, key = lambda keyCol:keyCol[0], reverse=True)
 
-    #print(sortedProcessed)
-
     # Menginisialisasi list kosong untuk menampung proses selanjutnya
     processedLD = []
 
@@ -155,46 +181,61 @@ def Search(query) :
         # Memasukkan tiap dictionary yang telah dihasilkan ke dalam list sebelumnya
         processedLD.append(attributeDict)
     
+    return processedLD , T , THeader
+
+def renderDocList() :
     # Menginisialisasi list kosong untuk menampung judul dari tiap dokumen
     docTitle = []
-    
+
     # Memasukkan tiap judul dokumen ke dalam dictionary dengan atribut judul
-    for titles in titleList:
-        titleDict = {"Title" : titles}
+    for name in fileList :
+        titleDict = {"Title" : name}
         docTitle.append(titleDict)
     
-    # Mengembalikan 2 nilai untuk dipakai dalam pembuatan websitenya
-    return processedLD, docTitle
+    return docTitle
+    
+
+class ItemTable(Table):
+    name = Col('Name')
+    description = Col('Description')
+
+
 
 # Inisiasi Flask
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'abc123abc123asiwh292rj'
 
 postQ = []
-docList = [{'name' : 'nama suatu dokumen'}]
+T = []
+THeader = []
+docList = renderDocList()
 
 # Rute utama, utk query dan hasil searching
 @app.route('/' , methods=['GET' , 'POST'])
 def query():
-    # Ambil variabel global postQ
+    # Ambil variabel global postQ , T , THeader
     global postQ
+    global T
+    global THeader
     postQ = []
+    T = []
+    THeader = []
     # Panggil QueryForm dari form.py
     form = QueryForm()
-    # Jika ada query yang disubmit, lakukan proses search, dan oper ke query.html sebagai posts
+    # Jika ada query yang disubmit, lakukan proses search, dan oper ke query.html berupa list similarity, list tiap baris table, dan list header tabel
     if form.validate_on_submit() :
         flash(f'Searching successed!' , 'success')
-        postQ = Search(form.query.data)
-        return render_template('query.html' , posts = postQ, docs = docList , form = form)
+        postQ , T , THeader = Search(form.query.data)
+        return render_template('query.html' , posts = postQ, docs = docList , T = T , THeader = THeader , form = form)
     # Jika tidak ada (pertama kali) , hasil searching tampilkan kosong
-    return render_template('query.html' , posts = postQ, docs = docList , form = form)
+    return render_template('query.html' , posts = postQ, docs = docList , T = T , THeader = THeader , form = form)
 
 # Rute untuk tiap artikel
 @app.route('/article/<id>')
 def article(id):
     # Ambil variabel global postQ , oper ke article.html untuk diproses pengecekan id mana yang akan ditampilkan
     global postQ
-    return render_template("article.html" , id = id, posts = postQ)
+    return render_template("article.html" , id = id, posts = postQ, title = "Article")
 
 
 if __name__ == '__main__':
