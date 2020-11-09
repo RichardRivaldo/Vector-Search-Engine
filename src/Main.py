@@ -2,7 +2,6 @@
 
 # Libraries
 from flask import Flask , render_template, url_for , flash , redirect
-from flask_table import Table, Col
 import os
 import Read
 import Preprocessing
@@ -52,12 +51,16 @@ def Search(query) :
     query = Preprocessing.stopwords(query)
     query = Preprocessing.stemming(query)
 
+    # query = ['red','big','car','red','car']
+
     if (query != []) :
         # Proses menghasilkan vektor q yang sudah dihilangkan kata berulang
+        # q2 = ['red','big','car']
         q2 = []
         for word in query :
             if word not in q2 :
                 q2.append(word)
+        # q2 = [2,1,2]
         num_q = [0 for x in range(len(q2))]
         for word in query :
             for i in range(len(q2)) :
@@ -65,11 +68,17 @@ def Search(query) :
                     num_q[i] += 1
 
         # Untuk setiap kata dari query yang muncul di database, simpan urutan ke berapanya
+        # qWord = [3, 8, 11] - indeks di wordList
         qWord = []
+        # variabel untuk menampung kata yang sudah di proses
+        dump = []
         for word in query :
-            for i in range(len(wordList)) :
-                if word == wordList[i] :
-                    qWord.append(i)
+            # tidak akan memroses kata yang sudah di proses
+            if word not in dump :
+                for i in range(len(wordList)) :
+                    if word == wordList[i] :
+                        qWord.append(i)
+            dump.append(word)
 
         # Query bisa berulang, jadi dicatat juga kemunculan tiap kata di query yang muncul di database
         num_qWord =[0 for x in range(len(qWord))]
@@ -111,6 +120,7 @@ def Search(query) :
             # Menghitung similaritas data sekarang dengan query, dan dimasukkan ke list similaritas
             currSim = float(dotProd/(normQ * normD))
             sim.append(currSim)
+
 
             # Menghasilkan list yang menampung jumlah kemunculan tiap query pada database untuk keperluan pembuatan tabel term
             inc = 0
@@ -193,13 +203,6 @@ def renderDocList() :
         docTitle.append(titleDict)
     
     return docTitle
-    
-
-class ItemTable(Table):
-    name = Col('Name')
-    description = Col('Description')
-
-
 
 # Inisiasi Flask
 app = Flask(__name__)
