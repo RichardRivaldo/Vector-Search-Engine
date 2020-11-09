@@ -10,8 +10,6 @@
 * Program menampilkan dokumen yang telah diurutkan sebelumnya disertai dengan nilai similaritas setiap dokumen tersebut.
 * Selain itu, juga akan ditampilkan tabel frekuensi dari tiap *term* yang dimasukkan sebagai *query* saat pencarian.
 
-## Screenshot(s)
-
 ## Stacks
 * Back-End: Python
     * Libraries: 
