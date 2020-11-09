@@ -136,15 +136,17 @@ def Search(query) :
     # Menginisialisasi list kosong untuk menampung proses selanjutnya
     processedLD = []
 
-    # Memasukkan tiap atribut yang ada ke dalam sebuah dictionary dengan key berupa Similarity, Title, dan FirstSentence
+    # Memasukkan tiap atribut yang ada ke dalam sebuah dictionary dengan key berupa Similarity, Title, dan FirstSentence, ID, dan Words
     for articles in range(len(sortedProcessed)):
         with open(('../test/'+sortedProcessed[articles][1]+'.txt'), 'r', encoding='utf-8') as File: 
             contents = File.read()
+            count = len(contents.split(" "))
         attributeDict = {"Similarity" : sortedProcessed[articles][0],
                         "Title" : sortedProcessed[articles][1],
                         "FirstSentence" : sortedProcessed[articles][2],
                         "Contents" : contents,
-                        "ID" : "Doc" + str(articles+1)
+                        "ID" : "Doc" + str(articles+1),
+                        "Words" : count
                         }
         # Memasukkan tiap dictionary yang telah dihasilkan ke dalam list sebelumnya
         processedLD.append(attributeDict)
