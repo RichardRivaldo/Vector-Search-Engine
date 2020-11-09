@@ -154,8 +154,17 @@ def Search(query) :
                         }
         # Memasukkan tiap dictionary yang telah dihasilkan ke dalam list sebelumnya
         processedLD.append(attributeDict)
-
-    return processedLD
+    
+    # Menginisialisasi list kosong untuk menampung judul dari tiap dokumen
+    docTitle = []
+    
+    # Memasukkan tiap judul dokumen ke dalam dictionary dengan atribut judul
+    for titles in titleList:
+        titleDict = {"Title" : titles}
+        docTitle.append(titleDict)
+    
+    # Mengembalikan 2 nilai untuk dipakai dalam pembuatan websitenya
+    return processedLD, docTitle
 
 # Inisiasi Flask
 app = Flask(__name__)
