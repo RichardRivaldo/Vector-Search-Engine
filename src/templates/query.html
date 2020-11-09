@@ -1,4 +1,20 @@
 {% extends "layout.html" %}
+{% block doclist %}
+    {% if posts != [] %}
+        <article class="media content-section">
+            <div class="media-body">
+            <div class="article-metadata">
+                Documents used : 
+            </div>
+            {% for post in posts %}
+                <a class="article-title" href="/article/{{ post.ID }}">{{ post.Title }}.txt</a>
+                <br>
+            {% endfor %}
+            </div>
+        </article>
+    {% endif %}
+{% endblock doclist %}
+
 {% block content %}
     {% for post in posts %}
         <article class="media content-section">
