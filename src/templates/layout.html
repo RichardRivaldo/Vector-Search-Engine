@@ -46,10 +46,11 @@
                         {% endfor %}
                     {% endif %}
                 {% endwith %}
-                {% block doclist %}{% endblock %}
+                
                 {% block query %}{% endblock %}
                 {% block content %}{% endblock %}
               </div>
+              {% block sideList %}{% endblock %}
             </div>
         </main>
 

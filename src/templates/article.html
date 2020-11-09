@@ -5,9 +5,8 @@
         <article class="media content-section">
             <div class="media-body">
             <div class="article-metadata">
-                Similarity : {{ post.Similarity * 100 }} %
-                <br>
-                Total Words : {{ post.Words }}
+                <p class='text-muted'>Similarity : {{ post.Similarity * 100 }} %</p> 
+                <p class='text-muted'>Total Words : {{ post.Words }}</p> 
             </div>
             <h2><a class="article-title">{{ post.Title }}</a></h2>
             <p class="article-content">{{ post.Contents }}</p>

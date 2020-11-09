@@ -51,56 +51,60 @@ def Search(query) :
     query = Preprocessing.stopwords(query)
     query = Preprocessing.stemming(query)
 
-    # Proses menghasilkan vektor q yang sudah dihilangkan kata berulang
-    q2 = []
-    for word in query :
-        if word not in q2 :
-            q2.append(word)
-    num_q = [0 for x in range(len(q2))]
-    for word in query :
-        for i in range(len(q2)) :
-            if word == q2[i] :
-                num_q[i] += 1
+    if (query != []) :
+        # Proses menghasilkan vektor q yang sudah dihilangkan kata berulang
+        q2 = []
+        for word in query :
+            if word not in q2 :
+                q2.append(word)
+        num_q = [0 for x in range(len(q2))]
+        for word in query :
+            for i in range(len(q2)) :
+                if word == q2[i] :
+                    num_q[i] += 1
 
-    # Untuk setiap kata dari query yang muncul di database, simpan urutan ke berapanya
-    qWord = []
-    for word in query :
-        for i in range(len(wordList)) :
-            if word == wordList[i] :
-                qWord.append(i)
+        # Untuk setiap kata dari query yang muncul di database, simpan urutan ke berapanya
+        qWord = []
+        for word in query :
+            for i in range(len(wordList)) :
+                if word == wordList[i] :
+                    qWord.append(i)
 
-    # Query bisa berulang, jadi dicatat juga kemunculan tiap kata di query yang muncul di database
-    num_qWord =[0 for x in range(len(qWord))]
-    for word in query :
-        for i in range(len(qWord)) :
-            if word == wordList[qWord[i]]:
-                num_qWord[i] += 1
+        # Query bisa berulang, jadi dicatat juga kemunculan tiap kata di query yang muncul di database
+        num_qWord =[0 for x in range(len(qWord))]
+        for word in query :
+            for i in range(len(qWord)) :
+                if word == wordList[qWord[i]]:
+                    num_qWord[i] += 1
 
-    # Menghitung similaritas
-    sim = []
-    for i in range(len(fileList)) :
-        # Menghitung Dot Product
-        dotProd = 0
-        k = 0
-        for idx in qWord :
-            dotProd += mVec[i][idx] * num_qWord[k]   # num_qWord adalah jlh kemunculan pada query, mVec adalah jlh kemunculan pada data
-            k +=1
+        # Menghitung similaritas
+        sim = []
+        for i in range(len(fileList)) :
+            # Menghitung Dot Product
+            dotProd = 0
+            k = 0
+            for idx in qWord :
+                dotProd += mVec[i][idx] * num_qWord[k]   # num_qWord adalah jlh kemunculan pada query, mVec adalah jlh kemunculan pada data
+                k +=1
 
-        # Menghitung norma dari query
-        sumQ = 0
-        for l in num_q :
-            sumQ += pow(l,2)
-        normQ = float(math.sqrt(sumQ))
+            # Menghitung norma dari query
+            sumQ = 0
+            for l in num_q :
+                sumQ += pow(l,2)
+            normQ = float(math.sqrt(sumQ))
 
-        # Menghitung norma dari data
-        sumD = 0
-        for j in range(len(wordList)) :
-            sumD += pow(mVec[i][j],2)
-        normD = float(math.sqrt(sumD))
+            # Menghitung norma dari data
+            sumD = 0
+            for j in range(len(wordList)) :
+                sumD += pow(mVec[i][j],2)
+            normD = float(math.sqrt(sumD))
 
-        # Menghitung similaritas data sekarang dengan query, dan dimasukkan ke list similaritas
-        currSim = float(dotProd/(normQ * normD))
-        sim.append(currSim)
+            # Menghitung similaritas data sekarang dengan query, dan dimasukkan ke list similaritas
+            currSim = float(dotProd/(normQ * normD))
+            sim.append(currSim)
+    else :
+        sim = [0 for x in range(len(fileList))]
+    
 
     # Membuat array yang menampung judul dokumen dengan format yang telah dislice
     titleList = [Title[:-4] for Title in fileList]
@@ -158,6 +162,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'abc123abc123asiwh292rj'
 
 postQ = []
+docList = [{'name' : 'nama suatu dokumen'}]
 
 # Rute utama, utk query dan hasil searching
 @app.route('/' , methods=['GET' , 'POST'])
@@ -169,11 +174,11 @@ def query():
     form = QueryForm()
     # Jika ada query yang disubmit, lakukan proses search, dan oper ke query.html sebagai posts
     if form.validate_on_submit() :
-        flash(f'Searching successed' , 'success')
+        flash(f'Searching successed!' , 'success')
         postQ = Search(form.query.data)
-        return render_template('query.html' , posts = postQ, form = form)
+        return render_template('query.html' , posts = postQ, docs = docList , form = form)
     # Jika tidak ada (pertama kali) , hasil searching tampilkan kosong
-    return render_template('query.html' , posts = postQ, form = form)
+    return render_template('query.html' , posts = postQ, docs = docList , form = form)
 
 # Rute untuk tiap artikel
 @app.route('/article/<id>')
