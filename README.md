@@ -18,7 +18,6 @@
         * NLTK (termasuk corpus dan wordnet)
         * Beautiful Soup
         * Lxml
-        * Pandas
         
 * Front-End: Flask
    * Libraries :
