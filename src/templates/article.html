@@ -1,14 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
     {% for post in posts %}
+        {% if id == post.ID %}
         <article class="media content-section">
             <div class="media-body">
             <div class="article-metadata">
-                <a class="mr-2" >{{ post.Similarity }}</a>
+                <a class="mr-2" >Similarity : {{ post.Similarity * 100 }} %</a>
             </div>
-            <h2><a class="article-title" href="#">{{ post.Title }}</a></h2>
+            <h2><a class="article-title">{{ post.Title }}</a></h2>
             <p class="article-content">{{ post.Contents }}</p>
             </div>
         </article>
+        {% endif %}
     {% endfor %}
 {% endblock content %}

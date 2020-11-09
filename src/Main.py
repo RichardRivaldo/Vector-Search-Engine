@@ -102,8 +102,6 @@ def Search(query) :
         currSim = float(dotProd/(normQ * normD))
         sim.append(currSim)
 
-    #print(sim) # buat tes
-
     # Membuat array yang menampung judul dokumen dengan format yang telah dislice
     titleList = [Title[:-4] for Title in fileList]
 
@@ -157,11 +155,14 @@ def Search(query) :
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'abc123abc123asiwh292rj'
 
-posts = []
+postQ = []
 
 # Rute utama, utk query dan hasil searching
 @app.route('/' , methods=['GET' , 'POST'])
 def query():
+    # Ambil variabel global postQ
+    global postQ
+    postQ = []
     # Panggil QueryForm dari form.py
     form = QueryForm()
     # Jika ada query yang disubmit, lakukan proses search, dan oper ke query.html sebagai posts
@@ -170,12 +171,14 @@ def query():
         postQ = Search(form.query.data)
         return render_template('query.html' , posts = postQ, form = form)
     # Jika tidak ada (pertama kali) , hasil searching tampilkan kosong
-    return render_template('query.html' , posts = posts, form = form)
+    return render_template('query.html' , posts = postQ, form = form)
 
 # Rute untuk tiap artikel
 @app.route('/article/<id>')
 def article(id):
-    return render_template("article.html")
+    # Ambil variabel global postQ , oper ke article.html untuk diproses pengecekan id mana yang akan ditampilkan
+    global postQ
+    return render_template("article.html" , id = id, posts = postQ)
 
 
 if __name__ == '__main__':
