@@ -64,6 +64,7 @@
 {% endblock sideList %}
 
 {% block table %}
+{% if T != [] %}
 <div class= "content-section">
     <div style="overflow-x:auto;">
         <table id="term-table">
@@ -85,5 +86,5 @@
         </table>
     </div>
 </div>
-
+{% endif %}
 {% endblock %}
