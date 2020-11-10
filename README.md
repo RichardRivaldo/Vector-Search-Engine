@@ -34,6 +34,7 @@
    - pip install flask
    - pip install flask-wtf
    - pip install werkzeug
+   - Jika ada error terkait dengan NLTK, dapat diunduh komplemen dari NLTK, dengan cara nltk.download('nama_komplemen'), misalnya punkt atau stopwords.
 
 ## Run
 * Jalankan Terminal atau Command Prompt dan pindah ke direktori src dari git ini (dalam Windows, bisa dijalankan perintah `cd/direktori_yang_ingin_dituju`.
