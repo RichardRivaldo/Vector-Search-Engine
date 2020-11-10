@@ -1,12 +1,13 @@
 # Memproses dokumen-dokumen beserta query yang dimasukkan
 
 # Libraries
-from flask import Flask , render_template, url_for , flash , redirect
+from flask import Flask , render_template, url_for , flash , redirect , request
+from werkzeug.utils import secure_filename
 import os
 import Read
 import Preprocessing
 import math
-from form import QueryForm
+from form import QueryForm , UploadForm
 
 # Menampung semua nama file ke dalam suatu variabel list fileList
 fileList = []
@@ -45,6 +46,8 @@ for content in contentList :
     j = j + 1
 
 def Search(query) :
+    global fileList , wordList , mVec
+
     # Terima query, lakukan pembersihan dll ke query seperti ke database
     query = Read.cleaning(query)
     query = Read.token(query)
@@ -60,7 +63,7 @@ def Search(query) :
         for word in query :
             if word not in q2 :
                 q2.append(word)
-        # q2 = [2,1,2]
+        # num_q = [2,1,2]
         num_q = [0 for x in range(len(q2))]
         for word in query :
             for i in range(len(q2)) :
@@ -147,12 +150,13 @@ def Search(query) :
     # Membuat array yang menampung judul dokumen dengan format yang telah dislice
     titleList = [Title[:-4] for Title in fileList]
 
-    # Membuat array yang menampung kalimat pertama dari setiap 
+    # Membuat array yang menampung kalimat pertama dari setiap data
     headList = []
     for titles in fileList:
         with open('../test/'+titles, encoding='utf-8') as f:
             head = f.read().split('.')
             headList.append(head[0] + '.')
+
 
     # Menginisialisasi Array 2D berisi perhitungan similarity, judul dokumen, dan kalimat pertama setiap dokumen
     processedFiles = [[0 for i in range(3)] for j in range(len(fileList))]
@@ -193,8 +197,9 @@ def Search(query) :
     
     return processedLD , T , THeader
 
-# prosedur membuat dictionary nama-nama file
 def renderDocList() :
+    global fileList
+
     # Menginisialisasi list kosong untuk menampung judul dari tiap dokumen
     docTitle = []
 
@@ -205,7 +210,6 @@ def renderDocList() :
     
     return docTitle
 
-    
 # Inisiasi Flask
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'abc123abc123asiwh292rj'
@@ -218,13 +222,13 @@ docList = renderDocList()
 # Rute utama, utk query dan hasil searching
 @app.route('/' , methods=['GET' , 'POST'])
 def query():
-    # Ambil variabel global postQ , T , THeader
-    global postQ
-    global T
-    global THeader
+    # Ambil variabel global postQ , T , THeader , docList
+    global postQ , T , THeader , docList
     postQ = []
     T = []
     THeader = []
+    # Karena ada kemungkinan upload baru, docList selalu di-update
+    docList = renderDocList()
     # Panggil QueryForm dari form.py
     form = QueryForm()
     # Jika ada query yang disubmit, lakukan proses search, dan oper ke query.html berupa list similarity, list tiap baris table, dan list header tabel
@@ -242,6 +246,62 @@ def article(id):
     global postQ
     return render_template("article.html" , id = id, posts = postQ, title = "Article")
 
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    # Panggil UploadForm dari form.py
+    form = UploadForm()
+    global fileList , wordList , mVec
+    
+    # Jika ada file tersubmit, ambil nama file (secured oleh werkzeug) , cek ekstensinya jika .txt, simpan file ke folder test
+    if form.validate_on_submit():
+        for files in form.file.data :
+            filename = secure_filename(files.filename)
+            file_ext = os.path.splitext(filename)[1]
+            if file_ext != '.txt':
+                flash(f'Format of file(s) uploaded is not allowed (.txt only), file submission canceled!' , 'danger')
+                return redirect(url_for('upload'))
+            files.save('../test/' + filename)
+        flash(f'File(s) added!' , 'success')
+
+        # Karena ada input file baru, database kamus di-update
+        # Menampung semua nama file ke dalam suatu variabel list fileList
+        fileList = []
+        for root, dirs, files in os.walk('../test', topdown=False):
+            for name in files :
+                dir = os.path.join(root,name).split('\\')  # Mengambil hanya nama filenya, tidak bersama direktori yang displit oleh \
+                fileList.append(dir[1])
+
+        contentList = []
+        for name in fileList :
+            # Menampung tiap konten dalam tiap file, melakukan cleaning, konversi ke token, menghapus stopword, dan lemmatize
+            content = Read.readfile('../test/'+name)
+            content = Read.cleaning(content)
+            content = Read.token(content)
+            content = Preprocessing.stopwords(content)
+            content = Preprocessing.stemming(content)
+
+            # Menggabungkan semua konten menjadi satu list
+            contentList.append(content)
+
+        # Membuat variabel penampung kata-kata yang ada di dokumen
+        wordList = []
+        for content in contentList :
+            for word in content :
+                if word not in wordList :
+                    wordList.append(word)
+
+        # Membuat variabel penampung jumlah kemunculan tiap kata pada tiap data
+        mVec = [[0 for x in range(len(wordList))] for y in range(len(fileList))]
+        j = 0
+        for content in contentList :
+            for word in content :
+                for i in range(len(wordList)) :
+                    if word == wordList[i] :
+                        mVec[j][i] = mVec[j][i] + 1
+            j = j + 1
+
+        return redirect(url_for('upload'))
+    return render_template('upload.html', form=form)
 
 if __name__ == '__main__':
     app.run(debug=False)
