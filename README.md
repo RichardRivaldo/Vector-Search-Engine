@@ -22,6 +22,7 @@
    * Libraries :
         * Flask
         * Wtforms
+        * Werkzeug
 
 ## Setup
 * Pastikan telah memiliki *library* dan *packages* yang digunakan. Jika NLTK tidak datang dengan lengkap, bisa dimasukkan kode `nltk.download('nama_package')` untuk mengunduh setiap package yang ada (lebih disarankan untuk menginstall NLTK sepenuhnya). Adapun untuk mendownload package yang berasal dari pip bisa dimasukkan kode `pip install ('nama_package')`.
@@ -32,6 +33,8 @@
    - pip install bs4
    - pip install flask
    - pip install flask-wtf
+   - pip install werkzeug
+   - Jika ada error terkait dengan NLTK, dapat diunduh komplemen dari NLTK, dengan cara nltk.download('nama_komplemen'), misalnya punkt atau stopwords.
 
 ## Run
 * Jalankan Terminal atau Command Prompt dan pindah ke direktori src dari git ini (dalam Windows, bisa dijalankan perintah `cd/direktori_yang_ingin_dituju`.
