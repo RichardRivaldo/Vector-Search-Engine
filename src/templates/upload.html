@@ -1,27 +1,47 @@
 {% extends "layout.html" %}
 {% block query %}
-<div class="content-section">
-    <form method="POST" action="" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Submit File</legend>
-            <div class = "form-group">
-                {{ form.file.label(class="form-control-label")}}
-                {% if form.file.errors %}
-                    {{ form.file(class="form-control form-control-lg is-invalid")}}
-                    <div class="invalid-feedback">
-                        {% for error in form.file.errors %}
-                            <span>{{ error }} </span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.file(class="form-control form-control-lg")}}
-                {% endif %}
+    <div class="content-section">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Upload File</legend>
+                <div class = "form-group">
+                    {{ form.file.label(class="form-control-label")}}
+                    {% if form.file.errors %}
+                        {{ form.file(class="form-control form-control-lg is-invalid")}}
+                        <div class="invalid-feedback">
+                            {% for error in form.file.errors %}
+                                <span>{{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.file(class="form-control form-control-lg")}}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
             </div>
-        </fieldset>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 {% endblock query %}
+
+{% block sideList %}
+<div class="col-md-4">
+    <div class="content-section">
+      <h3>Side List</h3>
+      <p class='text-muted'>Here is a list of documents used
+        <article class="media content-section">
+            <div class="media-body">
+            <div class="article-metadata">
+                Documents used : 
+            </div>
+            {% for post in docs %}
+                <p>{{ post.Title }}</p>
+            {% endfor %}
+            </div>
+        </article>
+      </p>
+    </div>
+  </div>
+{% endblock sideList %}

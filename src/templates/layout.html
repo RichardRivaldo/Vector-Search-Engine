@@ -30,7 +30,7 @@
             padding-top: 12px;
             padding-bottom: 12px;
             text-align: left;
-            background-color: #5f788a;
+            background-color: #4d4d4d;
             color: white;
           }
         </style>
@@ -38,7 +38,7 @@
         {% if title %}
             <title>Search Engine - {{title}}</title>
         {% else %}
-            <title>Search Engine</title>
+            <title>Search Engine - sabeb</title>
         {% endif %}
     </head>
 
@@ -46,13 +46,13 @@
         <header class="site-header">
             <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
               <div class="container">
-                <a class="navbar-brand mr-4" href="/">Search Engine</a>
+                <a class="navbar-brand mr-4" href="/">sabeb</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
                   <div class="navbar-nav mr-auto">
-                    <a class="nav-item nav-link" href="{{ url_for('query') }}">Query</a>
+                    <a class="nav-item nav-link" href="{{ url_for('query') }}">Search</a>
                     <a class="nav-item nav-link" href="{{ url_for('upload') }}">Upload</a>
                   </div>
                 </div>

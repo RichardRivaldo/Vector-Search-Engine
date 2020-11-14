@@ -246,10 +246,12 @@ def article(id):
     global postQ
     return render_template("article.html" , id = id, posts = postQ, title = "Article")
 
+# Rute untuk upload file
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     # Panggil UploadForm dari form.py
     form = UploadForm()
+    docList = renderDocList()
     global fileList , wordList , mVec
     
     # Jika ada file tersubmit, ambil nama file (secured oleh werkzeug) , cek ekstensinya jika .txt, simpan file ke folder test
@@ -301,7 +303,7 @@ def upload():
             j = j + 1
 
         return redirect(url_for('upload'))
-    return render_template('upload.html', form=form)
+    return render_template('upload.html', form=form, docs = docList)
 
 if __name__ == '__main__':
     app.run(debug=False)
